@@ -13,14 +13,14 @@ const schema = {
       "type": "array",   
       children: [
         {
-          "key": "email123",
+          "key": "email1",
           "type": "input",
           "props": {
             "placeholder": "这是子元素的第一个input"
           },
         },
         {
-          "key": "email123",
+          "key": "email2",
           "type": "input",
           "props": {
             "placeholder": "这是子元素的第二个input"
@@ -60,6 +60,9 @@ function App() {
   const onFCFieldChange = (e: any, value: any) => {
     console.log("onfieldchange", e, value)
   }
+  const onFCFocus = (e: any, value: any) => {
+    console.log("onFCFocus", e, value)
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -67,7 +70,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <Form schema={schema} onFieldChange={onFCFieldChange}/>
+        <Form schema={schema} onFieldChange={onFCFieldChange} onFocus={onFCFocus}/>
         <a
           className="App-link"
           href="https://reactjs.org"

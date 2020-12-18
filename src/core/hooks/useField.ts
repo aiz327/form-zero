@@ -1,6 +1,8 @@
 import { useMemo, useEffect, useRef, useContext } from 'react'
 import { IFormProps } from '../interface/core-type'
-import { FormSubscription } from '../manager';
+import { Subscription } from '../manager';
+import { FormContext } from '../context';
+import { createField } from '../create-field';
 
 /**
  * 定义状态
@@ -12,15 +14,27 @@ import { FormSubscription } from '../manager';
 export const useField = (
   props: IFormProps
 ) => {
+  const form = useContext(FormContext);
+  const fieldRef = useRef<any>({});
+  const fieldSubscription = new Subscription();
 
-  const formSubscription = new FormSubscription();
+  const field = createField(props);
 
-  const formApi = {
+  const mutator = form.registMutator(field);
 
+  // fieldRef.fieldState = fieldState;
+
+  const fieldApi = {
+    focus: () => {
+
+    }
   }
+  fieldRef.current.field = field;
 
-  return formApi;
-
+  return {
+    mutator: mutator,
+    field: fieldRef.current.field
+  };
 }
 
 export default useField

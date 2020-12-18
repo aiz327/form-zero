@@ -26,21 +26,35 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
       return renderField(cSchema, props);
     }) : []
   } else {
-    const componentName = schema.getSchemaType() || ""
-    const schemaProps = schema.getSchemaProps()
-    let componentProps = {
-      ...schemaProps,
-      onChange: (event: any, ...args: any[]) => {
-        if (schemaProps["onChange"]) {
-          schemaProps["onChange"](event, ...args);
+    const connectField = (props : any) => {
+      const {mutator} = props;
+      const componentName = schema.getSchemaType() || ""
+      const schemaProps = schema.getSchemaProps()
+      let componentProps = {
+        ...schemaProps,
+        onFocus: (event: any, ...args: any[]) => {
+          mutator.focus(event, ...args);
+          if (schemaProps["onFocus"]) {
+            schemaProps["onFocus"](event, ...args);
+          }
+        },
+        onChange: (event: any, ...args: any[]) => {
+          mutator.change(event, ...args);
+          if (schemaProps["onChange"]) {
+            schemaProps["onChange"](event, ...args);
+          }
         }
-      }
-    };
-    let FieldComponet = fields && fields[componentName]
+      };
+      let FieldComponet = fields && fields[componentName]
 
+      return <FieldComponet {...componentProps}>{schema.getSchemeChild()}</FieldComponet>
+         
+    }
     return (
       <FieldUI schema={schema}>
-        <FieldComponet {...componentProps}>{schema.getSchemeChild()}</FieldComponet>
+        <Field schema={schema}>
+          {connectField}
+        </Field>
       </FieldUI>
     )
   }

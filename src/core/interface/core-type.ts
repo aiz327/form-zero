@@ -1,5 +1,10 @@
 import { Schema } from "../schema";
 
+export interface IFormState {
+  init?: boolean;
+  submit?: boolean;
+}
+
 /**
  * 
  */
@@ -23,6 +28,7 @@ export interface IFormProps {
 
   schema: ISchemaElement;
   onFieldChange?: any;
+  [name: string]: any
 }
 
 /**
