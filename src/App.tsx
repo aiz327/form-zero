@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { Form } from './antd/form';
+import AuthCode from './antd-components/auth-code/auth-code';
 import logo from './logo.svg';
 import './App.css';
 
@@ -63,9 +64,19 @@ function App() {
   const onFCFocus = (e: any, value: any) => {
     console.log("onFCFocus", e, value)
   }
+  function onChangeCode(e:any){
+    console.log( e.target.value )
+  }
+  function getCheckCode(){
+    return new Promise((resolve, reject) => {
+      resolve();
+    })
+  }
+  
   return (
     <div className="App">
       <header className="App-header">
+      <AuthCode countDown={20} onInput={onChangeCode}   getAuthCodeReq={getCheckCode} />
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
