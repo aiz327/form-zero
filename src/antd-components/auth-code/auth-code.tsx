@@ -3,7 +3,12 @@ import { useState } from 'react'
 import { Input } from 'antd';
 import useInterval from '../../core/hooks/useInterval';
 import './auth-code.css';
-
+/**
+   * @description 获取验证码
+   * @param {number} countDown 倒计时秒数
+   * @param {demo} icon 输入框左边内侧icon节点
+   * @param {function} getAuthCodeReq 请求接口获取验证码（promise函数）
+   */
 export default function AuthCode(props: any) {
   const [countDown, setCountDown] = useState<number>(props.countDown || 60)
   const [delay, setDelay] = useState<number>(0)
@@ -17,14 +22,14 @@ export default function AuthCode(props: any) {
   }, delay)
 
   function onGetAuthCode() {
-    props.getAuthCodeReq&&props.getAuthCodeReq().then(() => { setDelay(1000); setCountStatus(true); setCountDown(props.countDown || 60) })
+    props.getAuthCodeReq && props.getAuthCodeReq().then(() => { setDelay(1000); setCountStatus(true); setCountDown(props.countDown || 60) })
   };
   return (
     <div
-      className={`auth-code ${props.className && props.className} ${props.icon && "has-icon"}`}
+      className={`auth-code ${props.className || ''}`}
     >
       <div className={`wrap ${props.icon && 'icon-wrap'}`}>
-      {props.icon &&<span className="icon">{props.icon}</span>}
+        {props.icon && <span className="icon">{props.icon}</span>}
         <Input {...props} />
         <span
           onClick={onGetAuthCode}

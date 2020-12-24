@@ -1,0 +1,7 @@
+@import '~antd/dist/antd.css';
+.auto-complete{
+  min-width: 200px;
+}
+.hight-warp span{
+  color: #1890ff;
+}

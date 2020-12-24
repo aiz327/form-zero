@@ -1,7 +1,8 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import { Button } from 'antd';
 import { Form } from './antd/form';
 import AuthCode from './antd-components/auth-code/auth-code';
+import AutoComplete from './antd-components/auto-complete/auto-complete';
 import logo from './logo.svg';
 import './App.css';
 
@@ -56,18 +57,25 @@ const schema = {
     },
   ]
 }
-
 function App() {
+  const[val,setVal]=useState('')
+  const[data,setData]=useState([{value:"dsfsd"},{value:"是的发个"}])
   const onFCFieldChange = (e: any, value: any) => {
     console.log("onfieldchange", e, value)
   }
   const onFCFocus = (e: any, value: any) => {
     console.log("onFCFocus", e, value)
   }
-  function onChangeCode(e:any){
+  const onChangeCode=(e:any)=>{
     console.log( e.target.value )
   }
-  function getCheckCode(){
+  const getAutoCompleteReq=(params:any)=>{
+    console.log("返回参数",params)
+    return new Promise((resolve, reject) => {
+      resolve([{value:"阿斯顿发送到"},{value:"是的发个"}]);
+    })
+  }
+  const getCheckCode=()=>{
     return new Promise((resolve, reject) => {
       resolve();
     })
@@ -76,7 +84,18 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <AuthCode countDown={20} onInput={onChangeCode}   getAuthCodeReq={getCheckCode} />
+      <AutoComplete 
+      //  options={[{value:"11"},{value:"22"}]}
+       highlightStatus={true}
+       currentShow={false}
+       delayTime={600}
+       extendParams={{type:1}}
+       requestFunc={(params:object)=>getAutoCompleteReq(params)}
+       onSelect={(value:any) => {
+        console.log('选中的',value)
+       }}
+      />
+      <AuthCode icon={<img src={logo} className="App-logo" alt="logo" />} countDown={20} onInput={onChangeCode}   getAuthCodeReq={getCheckCode} />
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
