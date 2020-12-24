@@ -87,15 +87,15 @@ function App() {
       <AutoComplete 
       //  options={[{value:"11"},{value:"22"}]}
        highlightStatus={true}
-       currentShow={false}
+       currentInputOptions={false}
        delayTime={600}
-       extendParams={{type:1}}
+       extendReqParams={{type:1}}
        requestFunc={(params:object)=>getAutoCompleteReq(params)}
        onSelect={(value:any) => {
         console.log('选中的',value)
        }}
       />
-      <AuthCode icon={<img src={logo} className="App-logo" alt="logo" />} countDown={20} onInput={onChangeCode}   getAuthCodeReq={getCheckCode} />
+      <AuthCode icon={<img src={logo} className="App-logo" alt="logo" />} countDownNumber={20} onInput={onChangeCode}   getAuthCodeReq={getCheckCode} />
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
