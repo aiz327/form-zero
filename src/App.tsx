@@ -7,17 +7,25 @@ import './App.css';
 const schema = {
   "key": "mainform",
   "type": "array",
+
   "children": [
     {
       "key": "name",
-      "type": "array",   
+      "type": "array",
       children: [
         {
           "key": "email1",
+          
           "type": "input",
-          "props": {
-            "placeholder": "这是子元素的第一个input"
+          "ui": {
+            "label": "邮箱",
           },
+          "props": {
+            "placeholder": "这是子元素的第一个input",
+          },
+          "rules": [
+            {"required": true, "message": "必填项"}
+          ]
         },
         {
           "key": "email2",
@@ -29,11 +37,44 @@ const schema = {
       ]
     },
     {
-      "key": "email",
-      "type": "input",
-      "props": {
-        "placeholder": "这是父元素的第一个input"
-      },
+      "key": "name",
+      "type": "block",
+      children: [
+        {
+          "key": "email",
+          "type": "input",
+          "props": {
+            "placeholder": "这是父元素的第一个input"
+          },
+        },
+        {
+          "key": "phone",
+          "type": "input",
+          "props": {
+            "placeholder": "这是父元素的第二个input"
+          },
+        },
+      ]
+    },
+    {
+      "key": "name",
+      "type": "block",
+      children: [
+        {
+          "key": "email",
+          "type": "input",
+          "props": {
+            "placeholder": "这是父元素的第一个input"
+          },
+        },
+        {
+          "key": "phone",
+          "type": "input",
+          "props": {
+            "placeholder": "这是父元素的第二个input"
+          },
+        },
+      ]
     },
     {
       "key": "phone",

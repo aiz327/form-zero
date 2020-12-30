@@ -1,0 +1,15 @@
+.list-view {
+}
+
+.block-view-wrapper {
+  display: inline-block;
+}
+
+.block-view {
+  display: flex;
+  
+}
+
+form {
+  width: 100%;
+}

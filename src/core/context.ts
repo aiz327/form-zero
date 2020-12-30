@@ -5,4 +5,6 @@ export const FormComponentsContext = createContext<any>(null);
 
 export const FormContext = createContext<any>(null);
 
+export const FormSchemaContext = createContext<any>(null);
+
 export const FieldContext = createContext<any>(null);

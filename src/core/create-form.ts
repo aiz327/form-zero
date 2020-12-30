@@ -19,7 +19,7 @@ export const createForm = (props: any) => {
   form.setState = (state: any) => {
     if (isFunc(state)) {
       state(form.state);
-      console.log("trigger focus,", form)
+      console.log("trigger,", form)
     }
   }
 

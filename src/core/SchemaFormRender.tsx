@@ -4,7 +4,7 @@ import { Form } from './form';
 import { Schema } from './schema';
 import { Subscription } from './manager';
 import { useForm } from './hooks/useForm';
-import { FormComponentsContext } from './context';
+import { FormComponentsContext, FormSchemaContext } from './context';
 import { getRegistry } from './register';
 import { FieldRender } from './field-render';
 import useSchemaForm from './hooks/useSchemaForm';
@@ -21,11 +21,13 @@ export const SchemaFromRender : any = (props: any) => {
   const formComponentProps = {}
   return (
     <FormComponentsContext.Provider value={{fields, formComponent: FormComponent}}>
-      <Form {...props} form={form}>
-        <FormComponent>
-          <FieldRender {...props} schema={schemaF}></FieldRender>
-        </FormComponent>
-      </Form>
+      <FormSchemaContext.Provider value={schemaF}>
+        <Form {...props} form={form}>
+          <FormComponent>
+            <FieldRender {...props} schema={schemaF}></FieldRender>
+          </FormComponent>
+        </Form>
+      </FormSchemaContext.Provider>
     </FormComponentsContext.Provider>
   )
 }

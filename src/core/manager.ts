@@ -31,7 +31,7 @@ export class Subscription<Payload = any> {
         }
         if (!name) {
           this.subscriber[key](payload);
-        }   
+        }
       }
     })
   }
