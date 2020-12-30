@@ -1,0 +1,23 @@
+@import '~antd/dist/antd.css';
+.multi-cascade{
+    position: relative;
+    min-width: 150px;
+    max-width: 300px;
+}
+.multi-cascade .ant-select{
+    width: 100%;
+}
+/* 由于4.0的ant open设置false不能出入所有隐藏 */
+.ant-select-dropdown{
+    display: none;
+}
+.ant-select-selection-placeholder{
+    text-align: left;
+}
+.cascade{
+    top: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    z-index: -1;
+}
