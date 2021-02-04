@@ -4,7 +4,7 @@ import { Schema } from "./schema";
 import { Field } from "./field";
 import { Layout } from "./layout";
 import { FormComponentsContext } from "./context";
-import { Form } from "antd";
+
 
 /**
  * 与布局组件结构还有点问题
@@ -42,6 +42,8 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
         },
         onChange: (event: any, ...args: any[]) => {
           mutator.change(event, ...args);
+          // TODO 预留 校验 位置
+          mutator.validate();
           if (schemaProps["onChange"]) {
             schemaProps["onChange"](event, ...args);
           }
@@ -53,11 +55,9 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
          
     }
     return (
-      <FieldUI schema={schema}>
-        <Field schema={schema}>
-          {connectField}
-        </Field>
-      </FieldUI>
+      <Field schema={schema}>
+        {connectField}
+      </Field>
     )
   }
 
@@ -67,22 +67,3 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
     </Layout>
   );
 };
-
-
-/**
- * FieldUI 留作后续自定义布局使用
- */
-export const FieldUI: React.FC<IFieldRenderProps> = ({
-  children,
-  schema,
-}) => {
-
-  const uiLayoutProps = schema.getSchemeUI();
-    
-  return (
-    <Form.Item {...uiLayoutProps}>
-      {children}
-    </Form.Item>
-  );
-}
-

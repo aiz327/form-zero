@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useRef, useContext } from 'react'
 import { IFormProps } from '../interface/core-type'
-import { Subscription } from '../manager';
+
 import { FormContext } from '../context';
 import { createField } from '../create-field';
 
@@ -16,10 +16,15 @@ export const useField = (
 ) => {
   const form = useContext(FormContext);
   const fieldRef = useRef<any>({});
-  const fieldSubscription = new Subscription();
+  
+  let field = null
+  if (!fieldRef.current.field) {
+    field = createField(props);
+  } else {
+    field = fieldRef.current.field
+  }
 
-  const field = createField(props);
-
+  let currentField = form.registField(field);
   const mutator = form.registMutator(field);
 
   // fieldRef.fieldState = fieldState;

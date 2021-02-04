@@ -27,7 +27,8 @@ const schema = {
             "placeholder": "这是子元素的第一个input",
           },
           "rules": [
-            {"required": true, "message": "必填项"}
+            {"required": true, "message": "必填项"},
+            {"type": "email", "message": "必须是邮箱"}
           ]
         },
         {
