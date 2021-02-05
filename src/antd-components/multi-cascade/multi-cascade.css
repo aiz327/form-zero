@@ -7,9 +7,9 @@
 .multi-cascade .ant-select{
     width: 100%;
 }
-/* 由于4.0的ant open设置false不能出入所有隐藏 */
+/* 由于4.0的ant open设置false不1能出1入所有隐藏 */
 .ant-select-dropdown{
-    display: none;
+    display: none; 
 }   
 .ant-select-selection-placeholder{
     text-align: left;

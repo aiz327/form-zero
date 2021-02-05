@@ -24,6 +24,7 @@ const MultiCascade: React.FC<any> = (props) => {
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [cascadeOnMouse, setCascadeOnMouse] = useState<boolean>(false);
   const [selectOnFocus, setSelectOnFocus] = useState<boolean>(false);
+  const [, forceUpdate] = useState();
   const [convertValue, setConvertValue] = useState([] as any[]);
   useEffect(() => { setConvertValue(convertValues(value)) }, [value])
   const onCascadeMouseEnter = () => setCascadeOnMouse(true);
@@ -56,6 +57,7 @@ const MultiCascade: React.FC<any> = (props) => {
   };
   //选中
   const onCascadeChange = (value: numberArray, selectedOptions: any) => {
+    debugger
     const res: any = {};
     const { fieldNames = {}, onChange, sel, limit } = props;
     const currentValue = props.value || [];
@@ -64,7 +66,10 @@ const MultiCascade: React.FC<any> = (props) => {
       res[hierarchyName[index]] = item[fieldNames["value"] || "value"];
       res[`${hierarchyName[index]}_label`] = item[fieldNames["label"] || "label"];
     });
-    if (!same(res, currentValue) && value.length > hierarchyLimit) onChange([...currentValue, res]);
+    if (!same(res, currentValue) && value.length > hierarchyLimit) {
+      setConvertValue(convertValues([...currentValue, res]))
+      onChange && onChange([...currentValue, res]);
+    };
   };
   // 更新选中的
   const onSelectChange = (value: Array<val>) => {
@@ -132,4 +137,5 @@ const MultiCascade: React.FC<any> = (props) => {
   );
 
 }
+
 export default MultiCascade;
