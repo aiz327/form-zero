@@ -10,7 +10,7 @@
 /* 由于4.0的ant open设置false不能出入所有隐藏 */
 .ant-select-dropdown{
     display: none;
-}
+}   
 .ant-select-selection-placeholder{
     text-align: left;
 }

@@ -105,7 +105,7 @@ console.log('dataCascade',dataCascade)
             children: "list"
           }}
           hierarchyName={['row1','row2','row3']}
-          onChange={(val:any)=>{setDataCascade(val)}}
+          onChange={(val:any)=>{setDataCascade(val) ;console.log(333,val)}}
           value={dataCascade}
           showSearch={true}
           notFoundContent="没有选项"
