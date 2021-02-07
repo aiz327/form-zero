@@ -23,7 +23,7 @@ export class Subscription<Payload = any> {
     
   }
 
-  notify = (name: string, payload: any) => {
+  notify = (name?: string , payload?: any) => {
     Object.keys(this.subscriber).forEach(key => {
       if (isFunc(this.subscriber[key])) {
         if (name && key === name) {
@@ -31,7 +31,7 @@ export class Subscription<Payload = any> {
         }
         if (!name) {
           this.subscriber[key](payload);
-        }   
+        }
       }
     })
   }

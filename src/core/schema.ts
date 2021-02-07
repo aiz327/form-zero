@@ -1,6 +1,5 @@
 import { ISchemaElement } from "./interface/core-type";
-import { isString } from "./util";
-import { isArray } from "util";
+import { isString, isArray } from "./util";
 /**
  * Schema基元素
  */
@@ -28,6 +27,8 @@ export class Schema implements ISchemaElement {
     return this.type;
   }
 
+  
+
   getSchemaProps() {
     return {
       ...this.props
@@ -44,12 +45,12 @@ export class Schema implements ISchemaElement {
 
 
   hasChildSchema() {
-    return this.type === "array"  && isArray(this.children);
+    return isArray(this.children);
   }
 
   convertJSON(jsonSchema: ISchemaElement) {
     Object.assign(this, jsonSchema);
-    if (jsonSchema.type === "array" && isArray(jsonSchema.children)) {
+    if (isArray(jsonSchema.children)) {
       this.children = jsonSchema.children && jsonSchema.children.map(schema => {
         return new Schema(schema);
       });

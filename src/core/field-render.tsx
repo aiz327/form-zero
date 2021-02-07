@@ -2,11 +2,12 @@ import React, { useContext } from "react";
 import { IFieldRenderProps } from "./interface/core-type";
 import { Schema } from "./schema";
 import { Field } from "./field";
+import { Layout } from "./layout";
 import { FormComponentsContext } from "./context";
-import { Form } from "antd";
+
 
 /**
- * Field使用
+ * 与布局组件结构还有点问题
  */
 export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
   let childField : React.ReactNode = [];
@@ -25,6 +26,7 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
     childField = schema.children ? schema.children.map(cSchema => {
       return renderField(cSchema, props);
     }) : []
+    
   } else {
     const connectField = (props : any) => {
       const {mutator} = props;
@@ -40,6 +42,8 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
         },
         onChange: (event: any, ...args: any[]) => {
           mutator.change(event, ...args);
+          // TODO 预留 校验 位置
+          mutator.validate();
           if (schemaProps["onChange"]) {
             schemaProps["onChange"](event, ...args);
           }
@@ -51,36 +55,15 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
          
     }
     return (
-      <FieldUI schema={schema}>
-        <Field schema={schema}>
-          {connectField}
-        </Field>
-      </FieldUI>
+      <Field schema={schema}>
+        {connectField}
+      </Field>
     )
   }
 
   return (
-    <React.Fragment>
+    <Layout schema={schema} >
       {childField}
-    </React.Fragment>
+    </Layout>
   );
 };
-
-
-/**
- * FieldUI 留作后续自定义布局使用
- */
-export const FieldUI: React.FC<IFieldRenderProps> = ({
-  children,
-  schema,
-}) => {
-
-  const uiLayoutProps = schema.getSchemeUI();
-    
-  return (
-    <Form.Item {...uiLayoutProps}>
-      {children}
-    </Form.Item>
-  );
-}
-

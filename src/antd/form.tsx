@@ -29,6 +29,7 @@ export class Form extends React.Component<IFormProps> {
       "date": DatePicker,
       "input": Input,
       "button": Button,
+      
     })
   }
 

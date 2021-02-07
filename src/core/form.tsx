@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { IFormProps, ISchemaElement } from './interface/core-type';
-import { FieldRender } from './field-render';
 import { Schema } from './schema';
 import { Subscription } from './manager';
 import { useForm } from './hooks/useForm';
