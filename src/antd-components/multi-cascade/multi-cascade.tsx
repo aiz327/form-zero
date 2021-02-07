@@ -16,13 +16,15 @@ type val = {
    * @description 级联多选
    * @param {number} hierarchyName 静态数据的每个层级的name
    * @param {Array} value 回显数据
+   * @param {number} hierarchyLimit 选择层级的限制默认第一级别不能选
    */
 const MultiCascade: React.FC<any> = (props) => {
   const cascaderRef: any = useRef();
-  const { hierarchyName = ["province", "city", "region"], expandTrigger = "hover", value, onChange, ...rest } = props;
+  const { hierarchyName = ["province", "city", "region"], expandTrigger = "hover",  hierarchyLimit = 1,value, onChange, ...rest } = props;
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [cascadeOnMouse, setCascadeOnMouse] = useState<boolean>(false);
   const [selectOnFocus, setSelectOnFocus] = useState<boolean>(false);
+  const [, forceUpdate] = useState();
   const [convertValue, setConvertValue] = useState([] as any[]);
   useEffect(() => { setConvertValue(convertValues(value)) }, [value])
   const onCascadeMouseEnter = () => setCascadeOnMouse(true);
@@ -39,6 +41,7 @@ const MultiCascade: React.FC<any> = (props) => {
     setSelectOnFocus(false)
   }
   const onSelectSearch = (value: string) => { if (props.showSearch) cascaderRef.current.setState({ inputValue: value }) };
+  //筛选出是否有已选中
   const same = (res: any, currentValue: any) => {
     for (const item of currentValue) {
       const same: boolean[] = [];
@@ -54,15 +57,19 @@ const MultiCascade: React.FC<any> = (props) => {
   };
   //选中
   const onCascadeChange = (value: numberArray, selectedOptions: any) => {
+    debugger
     const res: any = {};
-    const { fieldNames = {}, onChange, sel, limit, selSize = 1 } = props;
+    const { fieldNames = {}, onChange, sel, limit } = props;
     const currentValue = props.value || [];
     if (limit && currentValue.length >= limit) return;
     selectedOptions.map((item: any, index: number) => {
       res[hierarchyName[index]] = item[fieldNames["value"] || "value"];
       res[`${hierarchyName[index]}_label`] = item[fieldNames["label"] || "label"];
     });
-    if (!same(res, currentValue) && value.length > (selSize)) onChange([...currentValue, res]);
+    if (!same(res, currentValue) && value.length > hierarchyLimit) {
+      setConvertValue(convertValues([...currentValue, res]))
+      onChange && onChange([...currentValue, res]);
+    };
   };
   // 更新选中的
   const onSelectChange = (value: Array<val>) => {
@@ -130,4 +137,5 @@ const MultiCascade: React.FC<any> = (props) => {
   );
 
 }
+
 export default MultiCascade;
