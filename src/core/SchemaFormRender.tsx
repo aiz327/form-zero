@@ -22,7 +22,7 @@ export const SchemaFromRender : any = (props: any) => {
   return (
     <FormComponentsContext.Provider value={{fields, formComponent: FormComponent}}>
       <FormSchemaContext.Provider value={schemaF}>
-        <Form {...props} form={form}>
+        <Form {...props} form={form} >
           <FormComponent>
             <FieldRender {...props} schema={schemaF}></FieldRender>
           </FormComponent>

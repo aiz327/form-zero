@@ -7,6 +7,7 @@ import MultiCascade from './antd-components/multi-cascade/multi-cascade';
 import logo from './logo.svg';
 import './App.css';
 
+
 const schema = {
   "key": "mainform",
   "type": "array",
@@ -18,7 +19,7 @@ const schema = {
       children: [
         {
           "key": "email1",
-          
+
           "type": "input",
           "ui": {
             "label": "邮箱",
@@ -27,8 +28,7 @@ const schema = {
             "placeholder": "这是子元素的第一个input",
           },
           "rules": [
-            {"required": true, "message": "必填项"},
-            {"type": "email", "message": "必须是邮箱"}
+            { "required": true, "message": "必填项", "blur": true },
           ]
         },
         {
@@ -37,6 +37,11 @@ const schema = {
           "props": {
             "placeholder": "这是子元素的第二个input"
           },
+          "rules": [
+            { "required": true, "message": "必填项" , "blur": true },
+            { "required": true, "type": "email", "message": "必须是邮箱"},
+            {"type": "boolean", "message": "超出了", "validator": (rule: any, value: any) => value.length < 8}
+          ]
         },
       ]
     },
@@ -96,7 +101,8 @@ const schema = {
       "ui": {
 
       },
-      "children": "提交"
+      "children": "提交",
+      "onAllValidate": () => { debugger }
     },
   ]
 }
@@ -124,7 +130,7 @@ function App() {
       resolve();
     })
   }
-console.log('dataCascade',dataCascade)
+  console.log('dataCascade', dataCascade)
   return (
     <div className="App">
       <header className="App-header">
@@ -146,12 +152,12 @@ console.log('dataCascade',dataCascade)
             value: "id",
             children: "list"
           }}
-          hierarchyName={['row1','row2','row3']}
-          onChange={(val:any)=>{setDataCascade(val) ;console.log(333,val)}}
+          hierarchyName={['row1', 'row2', 'row3']}
+          onChange={(val: any) => { setDataCascade(val); console.log(333, val) }}
           value={dataCascade}
           showSearch={true}
           notFoundContent="没有选项"
-          options={[{id:1,name:"江苏",list:[{id:55,name:"苏州",list:[{id:66,name:"吴中"}]}]},{id:11,name:"浙江",list:[{id:155,name:"杭州",list:[{id:166,name:"西湖"}]}]}]}
+          options={[{ id: 1, name: "江苏", list: [{ id: 55, name: "苏州", list: [{ id: 66, name: "吴中" }] }] }, { id: 11, name: "浙江", list: [{ id: 155, name: "杭州", list: [{ id: 166, name: "西湖" }] }] }]}
           placeholder="请选择"
         />
         <img src={logo} className="App-logo" alt="logo" />

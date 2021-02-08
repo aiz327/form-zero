@@ -29,7 +29,7 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
     
   } else {
     const connectField = (props : any) => {
-      const {mutator} = props;
+      const {mutator,validateAllMutator} = props;
       const componentName = schema.getSchemaType() || ""
       const schemaProps = schema.getSchemaProps()
       let componentProps = {
@@ -40,6 +40,7 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
             schemaProps["onFocus"](event, ...args);
           }
         },
+        onBlur: (event: any, ...args: any[]) => {mutator.blur(event, ...args)},
         onChange: (event: any, ...args: any[]) => {
           mutator.change(event, ...args);
           // TODO 预留 校验 位置
@@ -47,7 +48,7 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
           if (schemaProps["onChange"]) {
             schemaProps["onChange"](event, ...args);
           }
-        }
+        },
       };
       let FieldComponet = fields && fields[componentName]
 

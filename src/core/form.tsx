@@ -10,6 +10,7 @@ import { FormContext, FormComponentsContext } from './context';
  * changed
  */
 export const Form : any = (props: any) => {
+  
   const {children} = props
   let form = useForm(props)
   form.registerFormSubscribe();
