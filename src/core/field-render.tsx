@@ -29,7 +29,7 @@ export const FieldRender: React.FC<IFieldRenderProps> = (props) => {
     
   } else {
     const connectField = (props : any) => {
-      const {mutator,validateAllMutator} = props;
+      const {mutator} = props;
       const componentName = schema.getSchemaType() || ""
       const schemaProps = schema.getSchemaProps()
       let componentProps = {

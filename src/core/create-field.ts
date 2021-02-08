@@ -14,7 +14,6 @@ export const createField = (props: any) => {
     active: false,
     value: false,
     blur: false,
-    validate: false,
   };
 
   field.schema = schema;
