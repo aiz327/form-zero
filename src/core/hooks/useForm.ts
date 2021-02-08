@@ -6,7 +6,8 @@ import { useFieldState } from './useFieldState';
 import { isFunc } from '../util';
 
 import AsyncValidator from 'async-validator';
-import { getValueFromEvent } from '../../utils/utils';
+import { getValueFromEvent, isHas } from '../../utils/utils';
+import { debug } from 'webpack';
 
 /**
  * 定义状态
@@ -25,7 +26,7 @@ export const useForm = (
   const formValidator = new Validator();
 
   const formApi = {
-    registField: (field : any) => {
+    registField: (field: any) => {
       formSubscription.notify("onFieldInit", field)
     },
     registerFormSubscribe: () => {
@@ -37,35 +38,39 @@ export const useForm = (
     },
     registMutator: (field: any) => {
       return {
-        focus: (event : any, ...args : any[]) => {
-          formSubscription.notify("onFocus", {field, event, ...args});
+        focus: (event: any, ...args: any[]) => {
+          formSubscription.notify("onFocus", { field, event, ...args });
           field.setState((state: any) => {
             state.active = true;
           })
         },
-        change: (event : any, ...args : any[]) => {
+        blur: (event: any, ...args: any[]) => {
+          const { rules = [] } = field.schema;
+          //单独写为了判断是否需要失去焦点触发验证
+          if (isHas(rules, 'blur')) return;
+          validatorFuc(field)
+        },
+        change: (event: any, ...args: any[]) => {
           formSubscription.notify("all", field);
           field.setState((state: any) => {
             state.value = getValueFromEvent(event);
           })
         },
-        validate: () => {
-          const { rules, key } = field.schema;
-          const { value } = field.state;
-          let validSource : any = {};
-          validSource[key] = value;
-          let descriptor : any = {};
-          descriptor[key] = rules;
-          const validator = new AsyncValidator(descriptor)
-          
-          validator.validate(validSource, undefined, (errors: any, fields: any) => {
-            field.setState((state: any) => {
-              state.errors = errors;
-            })
-          })
-        }
+        validate: () => { validatorFuc(field) }
       }
-    }
+    },
+  }
+  const validatorFuc = (field: any) => {
+    const { rules = [], key } = field.schema;
+    const { value, errors } = field.state;
+    let validSource: any = {};
+    validSource[key] = value;
+    let descriptor: any = {};
+    descriptor[key] = rules;
+    const validator = new AsyncValidator(descriptor)
+    validator.validate(validSource, undefined, (errors: any, fields: any) => {
+      field.setState((state: any) => { state.errors = errors; })
+    })
   }
 
   return formApi;

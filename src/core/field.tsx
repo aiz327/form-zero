@@ -8,11 +8,13 @@ import { isFunc } from "./util";
 
 import { Form } from "antd";
 
+
 const processValidProps = (state : any) => {
+  console.log('processValidProps',state)
   // 这里先实现功能 校验状态还需要细化
   return {
     validateStatus: state.errors ? 'error' : 'success',
-    help: state.errors ? state.errors[0].message : ''
+    help: state.errors ? state.errors[0].message : '',
   }
 }
 
